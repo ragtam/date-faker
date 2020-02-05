@@ -1,23 +1,29 @@
-import { shiftByYear } from './date-shifters/year-shifter';
+import changeDate from './change-date';
 
 let originalDateObject = Date;
 
-const shifters = new Map([
-    ['year', shiftByYear],
-    ['years', shiftByYear]
+const dateShiftingFunctions = new Map([
+    ['year', dateToBeChanged => changeDate(dateToBeChanged).addYear],
+    ['month', dateToBeChanged => changeDate(dateToBeChanged).addMonth],
+    ['day', dateToBeChanged => changeDate(dateToBeChanged).addDay],
 ]);
 
 const dateFaker = {
-    add: (value, unit) => {
-        const fakedDate = shifters.get(unit)(originalDateObject, value);
+    add: (timeShiftValue, shiftUnit) => {
+        const shiftFun = dateShiftingFunctions.get(shiftUnit);
+        const res = shiftFun(new originalDateObject())(timeShiftValue);
 
-        Date = () => {
-            return new originalDateObject(fakedDate.toISOString());
+        Date = function() {
+            if (arguments.length === 0) {
+                return new originalDateObject(res.toISOString());
+            } else {
+                return new originalDateObject(...arguments);
+            }
         };
     },
     reset: () => {
         Date = originalDateObject;
-    }
+    },
 };
 
 export default dateFaker;

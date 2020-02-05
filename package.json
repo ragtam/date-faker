@@ -5,7 +5,8 @@
     "main": "index.js",
     "module": "main.js",
     "scripts": {
-        "test": "jest"
+        "test": "jest",
+        "test:debug": "node --inspect node_modules/.bin/jest --watch --runInBand"
     },
     "keywords": [],
     "author": "",
