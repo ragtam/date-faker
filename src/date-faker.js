@@ -6,6 +6,13 @@ const dateShiftingFunctions = new Map([
     ['year', dateToBeChanged => changeDate(dateToBeChanged).addYear],
     ['month', dateToBeChanged => changeDate(dateToBeChanged).addMonth],
     ['day', dateToBeChanged => changeDate(dateToBeChanged).addDay],
+    ['hour', dateToBeChanged => changeDate(dateToBeChanged).addHour],
+    ['minute', dateToBeChanged => changeDate(dateToBeChanged).addMinute],
+    ['second', dateToBeChanged => changeDate(dateToBeChanged).addSecond],
+    [
+        'millisecond',
+        dateToBeChanged => changeDate(dateToBeChanged).addMillisecond,
+    ],
 ]);
 
 const dateFaker = {
@@ -20,6 +27,9 @@ const dateFaker = {
                 return new originalDateObject(...arguments);
             }
         };
+        Date.now = new originalDateObject(res.toISOString()).getTime();
+        Date.parse = originalDateObject.parse;
+        Date.UTC = originalDateObject.UTC;
     },
     reset: () => {
         Date = originalDateObject;
