@@ -1,27 +1,37 @@
 {
     "name": "date-faker",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "module": "main.js",
+    "version": "0.0.1",
+    "description": "[UNDER DEVELOPMENT] package used to change the current date available through Date object",
+    "main": "dist/index.js",
     "scripts": {
         "test": "jest",
-        "test:debug": "node --inspect node_modules/.bin/jest --watch --runInBand"
+        "test:debug": "node --inspect node_modules/.bin/jest --watch --runInBand",
+        "build": "parcel build index.js"
     },
     "keywords": [],
     "author": "",
-    "license": "ISC",
+    "license": "UNLICENSED",
     "dependencies": {
         "esm": "^3.2.25"
     },
     "devDependencies": {
+        "@babel/core": "^7.8.4",
         "@babel/preset-env": "^7.8.4",
         "babel-jest": "^25.1.0",
-        "jest": "^25.1.0"
+        "jest": "^25.1.0",
+        "parcel-bundler": "^1.12.4"
     },
     "jest": {
         "transform": {
             "^.+\\.js?$": "babel-jest"
         }
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ragtam/date-faker.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ragtam/date-faker/issues"
+    },
+    "homepage": "https://github.com/ragtam/date-faker#readme"
 }
