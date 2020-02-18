@@ -1,25 +1,24 @@
 {
     "name": "date-faker",
-    "version": "0.0.1",
+    "version": "0.0.8",
     "description": "[UNDER DEVELOPMENT] package used to change the current date available through Date object",
-    "main": "dist/index.js",
+    "main": "src/date-faker.js",
     "scripts": {
         "test": "jest",
         "test:debug": "node --inspect node_modules/.bin/jest --watch --runInBand",
-        "build": "parcel build index.js"
+        "build": "babel src -d lib/src --ignore src/*.spec.js"
     },
     "keywords": [],
     "author": "",
-    "license": "UNLICENSED",
-    "dependencies": {
-        "esm": "^3.2.25"
-    },
+    "license": "MIT",
+    "dependencies": {},
     "devDependencies": {
+        "@babel/cli": "^7.8.4",
         "@babel/core": "^7.8.4",
+        "@babel/plugin-transform-modules-commonjs": "^7.8.3",
         "@babel/preset-env": "^7.8.4",
         "babel-jest": "^25.1.0",
-        "jest": "^25.1.0",
-        "parcel-bundler": "^1.12.4"
+        "jest": "^25.1.0"
     },
     "jest": {
         "transform": {
