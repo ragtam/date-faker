@@ -1,0 +1,28 @@
+{
+    "name": "date-faker",
+    "version": "0.0.9",
+    "description": "Package overriding what the now ( new Date(), Date.now() ) is in JS. It allows to manually change current date with `moment.js` like syntax.",
+    "main": "src/date-faker.js",
+    "keywords": [
+        "date",
+        "faker",
+        "date-faker",
+        "date faker",
+        "mock",
+        "now",
+        "test",
+        "mock date"
+    ],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {},
+    "devDependencies": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ragtam/date-faker.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ragtam/date-faker/issues"
+    },
+    "homepage": "https://github.com/ragtam/date-faker#readme"
+}
