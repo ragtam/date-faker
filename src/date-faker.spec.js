@@ -1,4 +1,5 @@
 import dateFaker from './date-faker';
+import moment from 'moment';
 
 afterEach(() => {
     dateFaker.reset();
@@ -66,4 +67,98 @@ it('should be callable with + unary operator #2', () => {
     const date = new Date(milliseconds);
 
     expect(date.getMilliseconds()).not.toBeNaN();
+});
+
+it('should be callable with configuration object', () => {
+    dateFaker.add({ year: 1, month: 2, day: 3 });
+
+    const after = new Date();
+
+    expect(after).toBeDefined();
+});
+
+it('should change year when called with config object', () => {
+    const before = new Date();
+    const config = { year: 1, month: 2, day: 3 };
+    dateFaker.add(config);
+
+    const after = new Date();
+
+    expect(after.getFullYear()).toBeGreaterThan(before.getFullYear());
+    expect(after.getFullYear()).toEqual(before.getFullYear() + config.year);
+});
+
+it('should change month when called with config object', () => {
+    const before = new Date();
+    const config = { month: 2 };
+
+    dateFaker.add(config);
+
+    const after = new Date();
+
+    const diff = moment(after).diff(before, 'month');
+    expect(diff).toEqual(config.month);
+});
+
+it('should change day when called with config object', () => {
+    const before = new Date();
+    const config = { day: 1 };
+
+    dateFaker.add(config);
+
+    const after = new Date();
+
+    const diff = moment(after).diff(before, 'day');
+    expect(diff).toEqual(config.day);
+});
+
+it('should change minute when called with config object', () => {
+    const before = new Date();
+    const config = { minute: 30 };
+
+    dateFaker.add(config);
+
+    const after = new Date();
+
+    const diff = moment(after).diff(before, 'minute');
+    expect(diff).toEqual(config.minute);
+});
+
+it('should change second when called with config object', () => {
+    const before = new Date();
+    const config = { second: 30 };
+
+    dateFaker.add(config);
+
+    const after = new Date();
+
+    const diff = moment(after).diff(before, 'second');
+    expect(diff).toEqual(config.second);
+});
+
+it('should change milliseconds when called with config object', () => {
+    const before = new Date();
+    const config = { millisecond: 500 };
+
+    dateFaker.add(config);
+
+    const after = new Date();
+
+    const diff = moment(after).diff(before, 'millisecond');
+    expect(diff).toEqual(config.millisecond);
+});
+
+it('should work fine for invalid object', () => {
+    const invalidConfigObj = { day: 1, a: 'xyz' };
+
+    dateFaker.add(invalidConfigObj);
+
+    const res = new Date();
+    expect(res).toBeDefined();
+});
+
+it('should throw if invalid unit was provided', () => {
+    expect(() => dateFaker.add(1, 'some invalid unit')).toThrow(
+        "Invalid shift unit provided. Correct values are: 'year' | 'month' | 'day' | 'minute' | 'second' | 'millisecond'"
+    );
 });

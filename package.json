@@ -1,12 +1,12 @@
 {
     "name": "date-faker",
     "version": "0.0.8",
-    "description": "[UNDER DEVELOPMENT] package used to change the current date available through Date object",
+    "description": "Package overriding what the now ( new Date(), Date.now() ) is in JS. It allows to manually change current date with `moment.js` like syntax.",
     "main": "src/date-faker.js",
     "scripts": {
         "test": "jest",
         "test:debug": "node --inspect node_modules/.bin/jest --watch --runInBand",
-        "build": "babel src -d lib/src --ignore src/*.spec.js"
+        "build": "babel src -d dist/src --ignore src/*.spec.js"
     },
     "keywords": [],
     "author": "",
@@ -18,7 +18,8 @@
         "@babel/plugin-transform-modules-commonjs": "^7.8.3",
         "@babel/preset-env": "^7.8.4",
         "babel-jest": "^25.1.0",
-        "jest": "^25.1.0"
+        "jest": "^25.1.0",
+        "moment": "^2.24.0"
     },
     "jest": {
         "transform": {

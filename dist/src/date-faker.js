@@ -15,6 +15,8 @@ function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _co
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 var originalDateObject = Date;
 var dateShiftingFunctions = new Map([['year', function (dateToBeChanged) {
   return (0, _changeDate["default"])(dateToBeChanged).addYear;
@@ -32,25 +34,46 @@ var dateShiftingFunctions = new Map([['year', function (dateToBeChanged) {
   return (0, _changeDate["default"])(dateToBeChanged).addMillisecond;
 }]]);
 var dateFaker = {
-  add: function add(timeShiftValue, shiftUnit) {
-    var shiftFun = dateShiftingFunctions.get(shiftUnit);
-    var res = shiftFun(new originalDateObject())(timeShiftValue);
-
-    Date = function Date() {
-      if (arguments.length === 0) {
-        return new originalDateObject(res.toISOString());
-      } else {
-        return _construct(originalDateObject, Array.prototype.slice.call(arguments));
-      }
-    };
-
-    Date.now = new originalDateObject(res.toISOString()).getTime();
-    Date.parse = originalDateObject.parse;
-    Date.UTC = originalDateObject.UTC;
+  add: function add(shift, shiftUnit) {
+    var dateAfterShift = _typeof(shift) == 'object' ? shiftByMultipleUnits(shift) : shiftByUnit(shift, shiftUnit);
+    overrideDate(dateAfterShift);
   },
   reset: function reset() {
-    Date = originalDateObject;
+    restoreOriginalDateBehaviour();
   }
 };
+
+function shiftByMultipleUnits(shiftConfigObj) {
+  return Object.keys(shiftConfigObj).reduce(function (resultDate, unit) {
+    return dateShiftingFunctions.has(unit) ? dateShiftingFunctions.get(unit)(resultDate)(shiftConfigObj[unit]) : resultDate;
+  }, new originalDateObject());
+}
+
+function shiftByUnit(shift, shiftUnit) {
+  if (!dateShiftingFunctions.has(shiftUnit)) {
+    throw new Error("Invalid shift unit provided. Correct values are: 'year' | 'month' | 'day' | 'minute' | 'second' | 'millisecond'");
+  }
+
+  return dateShiftingFunctions.get(shiftUnit)(new originalDateObject())(shift);
+}
+
+function overrideDate(dateAfterShift) {
+  Date = function Date() {
+    if (arguments.length === 0) {
+      return new originalDateObject(dateAfterShift);
+    } else {
+      return _construct(originalDateObject, Array.prototype.slice.call(arguments));
+    }
+  };
+
+  Date.now = new originalDateObject(dateAfterShift).getTime();
+  Date.parse = originalDateObject.parse;
+  Date.UTC = originalDateObject.UTC;
+}
+
+function restoreOriginalDateBehaviour() {
+  Date = originalDateObject;
+}
+
 var _default = dateFaker;
 exports["default"] = _default;
