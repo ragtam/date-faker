@@ -1,6 +1,6 @@
 {
     "name": "date-faker",
-    "version": "0.0.9",
+    "version": "1.0.1",
     "description": "Package overriding what the now ( new Date(), Date.now() ) is in JS. It allows to manually change current date with `moment.js` like syntax.",
     "main": "src/date-faker.js",
     "keywords": [

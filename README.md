@@ -10,4 +10,6 @@ Code in src. Build transpiled to dist folder, which later gets deployed to npm.
 
 https://www.npmjs.com/package/date-faker
 
-## suggestions / changes welcome
+## contributing
+
+All suggestions / changes / bug reports are welcome.
