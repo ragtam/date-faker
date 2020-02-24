@@ -69,3 +69,13 @@ dateFaker.add(-1, 'month');
 
 new Date(); // faked date: 2020-01-20
 ```
+
+setting specific date
+
+```
+new Date(); // standard behaviour: 2020-02-20
+
+dateFaker.set('2019/01/24');
+
+new Date(); // faked date: 2019-01-24
+```
