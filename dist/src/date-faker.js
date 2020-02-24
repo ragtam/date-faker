@@ -38,6 +38,9 @@ var dateFaker = {
     var dateAfterShift = _typeof(shift) == 'object' ? shiftByMultipleUnits(shift) : shiftByUnit(shift, shiftUnit);
     overrideDate(dateAfterShift);
   },
+  set: function set(args) {
+    overrideDate(args);
+  },
   reset: function reset() {
     restoreOriginalDateBehaviour();
   }
