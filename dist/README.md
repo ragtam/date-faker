@@ -13,12 +13,6 @@ npm install date-faker
 Import to module:
 
 ```
-var dateFaker = require('date-faker');
-```
-
-or
-
-```
 import dateFaker from 'date-faker';
 ```
 
@@ -36,6 +30,10 @@ Methods:
     -   `configObject` object used for shifting the date. Valid property names are: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond'. All of then should be of type number, indicating the shift value, .
 
     In methods above shift values can be either positive or negative numbers, for adding or substracting the date.
+
+-   `set(value)`: set specific date.
+
+    -   `value` can be of type Date or string. String should be formatted `YYYY/MM/DD` / `YYYY-MM-DD` / ISO String.
 
 -   `reset()`: restores `Date` original behaviour
 

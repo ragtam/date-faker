@@ -17,6 +17,9 @@ const dateFaker = {
         const dateAfterShift = typeof shift == 'object' ? shiftByMultipleUnits(shift) : shiftByUnit(shift, shiftUnit);
         overrideDate(dateAfterShift);
     },
+    set: args => {
+        overrideDate(args);
+    },
     reset: () => {
         restoreOriginalDateBehaviour();
     },

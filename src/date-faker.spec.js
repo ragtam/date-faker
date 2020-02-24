@@ -168,3 +168,38 @@ describe('1 parameter for add method', () => {
         expect(res).toBeDefined();
     });
 });
+
+describe('set functionality', () => {
+    it('should set date from previous date', () => {
+        const expectedDate = '2019-08-14';
+        const d = moment(expectedDate).toDate();
+
+        const res = new Date(d);
+
+        expect(moment(res).format('YYYY-MM-DD')).toEqual(expectedDate);
+    });
+
+    it('should set date from ISO string', () => {
+        dateFaker.set('2019-01-15T06:51:21.237Z');
+
+        const res = new Date();
+
+        expect(moment(res).format('YYYY-MM-DD hh:mm')).toEqual('2019-01-15 07:51');
+    });
+
+    it('should set date from string formatted with dashes', () => {
+        dateFaker.set('2019-01-24');
+
+        const res = new Date();
+
+        expect(moment(res).format('YYYY-MM-DD')).toEqual('2019-01-24');
+    });
+
+    it('should set date from string formatted with forward slashes', () => {
+        dateFaker.set('2019/01/24');
+
+        const res = new Date();
+
+        expect(moment(res).format('YYYY/MM/DD')).toEqual('2019/01/24');
+    });
+});
