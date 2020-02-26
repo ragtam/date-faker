@@ -25,9 +25,17 @@ Methods:
     -   `value` a number indicating how much the current date should be changed;
     -   `unit` string representing a unit for a change, valid units are: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond';
 
+        ```
+        dateFaker.add(1, 'day');
+        ```
+
 -   `add(configObject)`: changes date relatively to the current (original), several shift units can be used.
 
     -   `configObject` object used for shifting the date. Valid property names are: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond'. All of then should be of type number, indicating the shift value, .
+
+        ```
+        dateFaker.add({ year: 1, month: -2, day: 3 });
+        ```
 
     In methods above shift values can be either positive or negative numbers, for adding or substracting the date.
 
@@ -35,7 +43,14 @@ Methods:
 
     -   `value` can be of type Date or string. String should be formatted `YYYY/MM/DD` / `YYYY-MM-DD` / ISO String.
 
+        ```
+        dateFaker.set('2019/01/24');
+        ```
+
 -   `reset()`: restores `Date` original behaviour
+    ```
+    dateFaker.reset();
+    ```
 
 ## example
 
