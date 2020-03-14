@@ -6,7 +6,8 @@
     "scripts": {
         "test": "jest",
         "test:debug": "node --inspect node_modules/.bin/jest --watch --runInBand",
-        "build": "babel src -d dist/src --ignore src/*.spec.js"
+        "build": "babel src -d dist/src --ignore src/*.spec.js",
+        "publish": "npm publish dist"
     },
     "keywords": [],
     "author": "",
