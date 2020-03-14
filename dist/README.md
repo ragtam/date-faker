@@ -12,8 +12,16 @@ npm install date-faker
 
 Import to module:
 
+-   ESM:
+
 ```
-import dateFaker from 'date-faker';
+import { dateFaker } from 'date-faker';
+```
+
+-   CommonJS:
+
+```
+var { dateFaker } = require('date-faker');
 ```
 
 ## usage

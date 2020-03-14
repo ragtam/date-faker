@@ -12,19 +12,6 @@ const dateShiftingFunctions = new Map([
     ['millisecond', dateToBeChanged => changeDate(dateToBeChanged).addMillisecond],
 ]);
 
-const dateFaker = {
-    add: (shift, shiftUnit) => {
-        const dateAfterShift = typeof shift == 'object' ? shiftByMultipleUnits(shift) : shiftByUnit(shift, shiftUnit);
-        overrideDate(dateAfterShift);
-    },
-    set: args => {
-        overrideDate(args);
-    },
-    reset: () => {
-        restoreOriginalDateBehaviour();
-    },
-};
-
 function shiftByMultipleUnits(shiftConfigObj) {
     return Object.keys(shiftConfigObj).reduce(
         (resultDate, unit) =>
@@ -57,4 +44,15 @@ function restoreOriginalDateBehaviour() {
     Date = originalDateObject;
 }
 
-export default dateFaker;
+export const dateFaker = {
+    add: (shift, shiftUnit) => {
+        const dateAfterShift = typeof shift == 'object' ? shiftByMultipleUnits(shift) : shiftByUnit(shift, shiftUnit);
+        overrideDate(dateAfterShift);
+    },
+    set: args => {
+        overrideDate(args);
+    },
+    reset: () => {
+        restoreOriginalDateBehaviour();
+    },
+};

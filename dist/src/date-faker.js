@@ -3,19 +3,19 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.dateFaker = void 0;
 
 var _changeDate = _interopRequireDefault(require("./change-date"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var originalDateObject = Date;
 var dateShiftingFunctions = new Map([['year', function (dateToBeChanged) {
@@ -33,18 +33,6 @@ var dateShiftingFunctions = new Map([['year', function (dateToBeChanged) {
 }], ['millisecond', function (dateToBeChanged) {
   return (0, _changeDate["default"])(dateToBeChanged).addMillisecond;
 }]]);
-var dateFaker = {
-  add: function add(shift, shiftUnit) {
-    var dateAfterShift = _typeof(shift) == 'object' ? shiftByMultipleUnits(shift) : shiftByUnit(shift, shiftUnit);
-    overrideDate(dateAfterShift);
-  },
-  set: function set(args) {
-    overrideDate(args);
-  },
-  reset: function reset() {
-    restoreOriginalDateBehaviour();
-  }
-};
 
 function shiftByMultipleUnits(shiftConfigObj) {
   return Object.keys(shiftConfigObj).reduce(function (resultDate, unit) {
@@ -78,5 +66,16 @@ function restoreOriginalDateBehaviour() {
   Date = originalDateObject;
 }
 
-var _default = dateFaker;
-exports["default"] = _default;
+var dateFaker = {
+  add: function add(shift, shiftUnit) {
+    var dateAfterShift = _typeof(shift) == 'object' ? shiftByMultipleUnits(shift) : shiftByUnit(shift, shiftUnit);
+    overrideDate(dateAfterShift);
+  },
+  set: function set(args) {
+    overrideDate(args);
+  },
+  reset: function reset() {
+    restoreOriginalDateBehaviour();
+  }
+};
+exports.dateFaker = dateFaker;
