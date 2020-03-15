@@ -1,4 +1,4 @@
-import dateFaker from './date-faker';
+import { dateFaker } from './date-faker';
 import moment from 'moment';
 
 afterEach(() => {
