@@ -10,7 +10,8 @@
         "build": "babel src -d dist/src --ignore src/*.spec.js",
         "npm:local": "verdaccio",
         "publish": "npm run test:public-api npm publish dist",
-        "publish:local": "npm publish dist --registry http://localhost:4873 --force"
+        "publish:local": "npm publish dist --registry http://localhost:4873 --force",
+        "unpublish:local": "npm unpublish date-faker --registry http://localhost:4873 --force" 
     },
     "keywords": [],
     "author": "",
