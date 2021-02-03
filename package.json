@@ -9,7 +9,7 @@
         "test:public-api": "npm run build && jest",
         "build": "babel src -d dist/src --ignore src/*.spec.js",
         "npm:local": "verdaccio",
-        "publish": "npm publish dist",
+        "publish": "npm run test:public-api npm publish dist",
         "publish:local": "npm publish dist --registry http://localhost:4873 --force"
     },
     "keywords": [],
