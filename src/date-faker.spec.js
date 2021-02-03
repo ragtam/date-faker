@@ -79,6 +79,55 @@ describe('2 parameters for add method', () => {
     });
 });
 
+describe('reset to original date on addAndReset method', () => {
+    it('should move date +1 day when configuration obj', () => {
+        const originalDate = new Date();
+
+        dateFaker.addAndReset({ day: 1 });
+
+        const fakedDate = new Date();
+
+        const daysDifferenceFaked = moment(fakedDate).diff(originalDate, 'day');
+
+        expect(daysDifferenceFaked).toEqual(1);
+    });
+
+    it('should reset date when shift object is passed', () => {
+        const originalDate = new Date();
+
+        dateFaker.addAndReset({ day: 1 });
+
+        const firstCallThisDateIsFaked = new Date();
+        const secondCallThisIsTheOriginalDate = new Date();
+
+        expect(firstCallThisDateIsFaked).not.toEqual(secondCallThisIsTheOriginalDate);
+        expect(secondCallThisIsTheOriginalDate).toEqual(originalDate);
+    });
+
+    it('should move +2 years', () => {
+        const originalDate = new Date();
+
+        dateFaker.addAndReset(2, 'year');
+
+        const fakedDate = new Date();
+        const yearDifference = moment(fakedDate).diff(originalDate, 'year');
+
+        expect(yearDifference).toEqual(2);
+    });
+
+    it('should move +2 years and restore the date afterwards', () => {
+        const originalDate = new Date();
+
+        dateFaker.addAndReset(2, 'year');
+
+        const firstCallThisDateIsFaked = new Date();
+        const secondCallThisIsTheOriginalDate = new Date();
+
+        expect(firstCallThisDateIsFaked).not.toEqual(secondCallThisIsTheOriginalDate);
+        expect(secondCallThisIsTheOriginalDate).toEqual(originalDate);
+    });
+});
+
 describe('1 parameter for add method', () => {
     it('should be callable with configuration object', () => {
         dateFaker.add({ year: 1, month: 2, day: 3 });
