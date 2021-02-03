@@ -1,26 +1,31 @@
 {
     "name": "date-faker",
-    "version": "0.0.8",
+    "version": "1.3.0",
     "description": "Package overriding what the now ( new Date(), Date.now() ) is in JS. It allows to manually change current date with `moment.js` like syntax.",
     "main": "src/date-faker.js",
     "scripts": {
         "test": "jest",
         "test:debug": "node --inspect node_modules/.bin/jest --watch --runInBand",
+        "test:public-api": "npm run build && jest",
         "build": "babel src -d dist/src --ignore src/*.spec.js",
-        "publish": "npm publish dist"
+        "npm:local": "verdaccio",
+        "publish": "npm run test:public-api npm publish dist",
+        "publish:local": "npm publish dist --registry http://localhost:4873 --force"
     },
     "keywords": [],
     "author": "",
     "license": "MIT",
     "dependencies": {},
     "devDependencies": {
-        "@babel/cli": "^7.8.4",
-        "@babel/core": "^7.8.4",
-        "@babel/plugin-transform-modules-commonjs": "^7.8.3",
-        "@babel/preset-env": "^7.8.4",
-        "babel-jest": "^25.1.0",
-        "jest": "^25.1.0",
-        "moment": "^2.24.0"
+        "@babel/cli": "^7.12.13",
+        "@babel/core": "^7.12.13",
+        "@babel/plugin-transform-modules-commonjs": "^7.12.13",
+        "@babel/preset-env": "^7.12.13",
+        "babel-jest": "^25.5.1",
+        "jest": "^25.5.4",
+        "lodash": "^4.17.20",
+        "moment": "^2.29.1",
+        "verdaccio": "^4.11.0"
     },
     "jest": {
         "transform": {

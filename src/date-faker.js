@@ -27,10 +27,14 @@ function shiftByUnit(shift, shiftUnit) {
     return dateShiftingFunctions.get(shiftUnit)(new originalDateObject())(shift);
 }
 
-function overrideDate(dateAfterShift) {
+function overrideDate(dateAfterShift, shouldResetAfterInvocation) {
     Date = function() {
         if (arguments.length === 0) {
-            return new originalDateObject(dateAfterShift);
+            const result = new originalDateObject(dateAfterShift);
+            if(shouldResetAfterInvocation) {
+                restoreOriginalDateBehaviour();
+            }
+            return result;
         } else {
             return new originalDateObject(...arguments);
         }
@@ -44,10 +48,18 @@ function restoreOriginalDateBehaviour() {
     Date = originalDateObject;
 }
 
+function getDateAfterShift(shift, shiftUnit) {
+    return typeof shift == 'object' ? shiftByMultipleUnits(shift) : shiftByUnit(shift, shiftUnit)
+}
+
 export const dateFaker = {
     add: (shift, shiftUnit) => {
-        const dateAfterShift = typeof shift == 'object' ? shiftByMultipleUnits(shift) : shiftByUnit(shift, shiftUnit);
-        overrideDate(dateAfterShift);
+        const d = getDateAfterShift(shift, shiftUnit);
+        overrideDate(d, false );
+    },
+    addAndReset: (shift, shiftUnit) => {
+        const d = getDateAfterShift(shift, shiftUnit);
+        overrideDate(d, true);
     },
     set: args => {
         overrideDate(args);

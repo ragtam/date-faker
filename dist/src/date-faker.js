@@ -11,9 +11,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
 
-function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
@@ -48,10 +48,16 @@ function shiftByUnit(shift, shiftUnit) {
   return dateShiftingFunctions.get(shiftUnit)(new originalDateObject())(shift);
 }
 
-function overrideDate(dateAfterShift) {
+function overrideDate(dateAfterShift, shouldResetAfterInvocation) {
   Date = function Date() {
     if (arguments.length === 0) {
-      return new originalDateObject(dateAfterShift);
+      var result = new originalDateObject(dateAfterShift);
+
+      if (shouldResetAfterInvocation) {
+        restoreOriginalDateBehaviour();
+      }
+
+      return result;
     } else {
       return _construct(originalDateObject, Array.prototype.slice.call(arguments));
     }
@@ -66,10 +72,18 @@ function restoreOriginalDateBehaviour() {
   Date = originalDateObject;
 }
 
+function getDateAfterShift(shift, shiftUnit) {
+  return _typeof(shift) == 'object' ? shiftByMultipleUnits(shift) : shiftByUnit(shift, shiftUnit);
+}
+
 var dateFaker = {
   add: function add(shift, shiftUnit) {
-    var dateAfterShift = _typeof(shift) == 'object' ? shiftByMultipleUnits(shift) : shiftByUnit(shift, shiftUnit);
-    overrideDate(dateAfterShift);
+    var d = getDateAfterShift(shift, shiftUnit);
+    overrideDate(d, false);
+  },
+  addAndReset: function addAndReset(shift, shiftUnit) {
+    var d = getDateAfterShift(shift, shiftUnit);
+    overrideDate(d, true);
   },
   set: function set(args) {
     overrideDate(args);
