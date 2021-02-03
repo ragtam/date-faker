@@ -99,9 +99,10 @@ describe('reset to original date on addAndReset method', () => {
 
         const firstCallThisDateIsFaked = new Date();
         const secondCallThisIsTheOriginalDate = new Date();
+        const differenceInMs = moment(secondCallThisIsTheOriginalDate).diff(originalDate, 'ms')
 
         expect(firstCallThisDateIsFaked).not.toEqual(secondCallThisIsTheOriginalDate);
-        expect(secondCallThisIsTheOriginalDate).toEqual(originalDate);
+        expect(differenceInMs <= 1).toEqual(true);
     });
 
     it('should move +2 years', () => {

@@ -37,7 +37,7 @@ Methods:
         dateFaker.add(1, 'day');
         ```
 
--   `add(configObject)`: changes date relatively to the current (original), several shift units can be used.
+*   `add(configObject)`: changes date relatively to the current (original), several shift units can be used.
 
     -   `configObject` object used for shifting the date. Valid property names are: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond'. All of then should be of type number, indicating the shift value, .
 
@@ -45,28 +45,26 @@ Methods:
         dateFaker.add({ year: 1, month: -2, day: 3 });
         ```
 
--   `addAndReset(value, unit)` or `addAndReset(configObject)`: accept the same parameters as `add` methods described above. The difference is that calling`addAndReset` method will fake only the first call of `new Date()`. All the next calls will return the original, unchanged date.
+*   `addAndReset(value, unit)` or `addAndReset(configObject)`: accept the same parameters as `add` methods described above. The difference is that calling`addAndReset` method will fake only the first call of `new Date()`. All the next calls will return the original, unchanged date.
 
         ```
-        dateFaker.add({ day: 1 });
-        const d1 = new Date(); // returns tomorrow`s date (+1 day).
-
-        dateFaker.add({ week: 1 });
-        const d2 = new Date(); // returns next week`s date PLUS one day from the call before (+8 days).
-        // As the shift is relative to the date that was PREVIOUSLY set. In such cases it might be useful to call addAndReset.
-        // This way each date is set relatively to the CURRENT date.
-
         dateFaker.addAndReset({ day: 1 });
-        const d1 = new Date(); // returns tomorrow`s date (+1 day).
+        const fakedDate = new Date(); // returns tomorrow`s date and resets original date on 'Date' object;
 
-        dateFaker.addAndReset({ week: 1 });
-        const d2 = new Date(); // returns next week`s date (+7 days).
+        const originalDate = new Date(); // returns current date;
 
+        // the same could be accomplished with
+
+        dateFaker.add({ day: 1 });
+        const fakedDate = new Date(); // returns tomorrow`s date.
+        dateFaker.reset(); // resets the faker.
+
+        const originalDate = new Date(); // returns current date;
         ```
 
     In methods above shift values can be either positive or negative numbers, for adding or substracting the date.
 
--   `set(value)`: set specific date.
+*   `set(value)`: set specific date.
 
     -   `value` can be of type Date or string. String should be formatted `YYYY/MM/DD` / `YYYY-MM-DD` / ISO String.
 
@@ -74,7 +72,7 @@ Methods:
         dateFaker.set('2019/01/24');
         ```
 
--   `reset()`: restores `Date` original behaviour
+*   `reset()`: restores `Date` original behaviour
     ```
     dateFaker.reset();
     ```
@@ -121,3 +119,9 @@ dateFaker.set('2019/01/24');
 
 new Date(); // faked date: 2019-01-24
 ```
+
+## changelog
+
+ver. 1.3.0:
+
+-   'addAndReset' method added.
